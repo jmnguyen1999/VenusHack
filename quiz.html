@@ -1,88 +1,85 @@
 
-<!--VERSION #3:
+<!--VERSION #4:
     Please update the version # everytime you update the code!
     Holds all the content of the quiz
     Need to implement a counter and link to the result page-->
-    
+
 <!--TODO: Rename downloaded file to "quiz" -->
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Niche Quiz </title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">  
-        <link href="index-style.css" rel="stylesheet" type="text/css">
-        <header>
-            <!-- Make a Top Navigation menu: formatted by the CSS file-->
-                <nav id = "menu">
-                    <ul>
-                    	<li>
-                            <a href = "index.html">Home</a>
-                        </li>
+<head>
+    <title>Niche Quiz </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="index-style.css" rel="stylesheet" type="text/css">
+    <header>
+        <!-- Make a Top Navigation menu: formatted by the CSS file-->
+        <nav id = "menu">
+            <ul>
+                <li>
+                    <a href = "index.html">Home</a>
+                </li>
 
-					<!-- select the Quiz tab -->
-                        <li class="active">	
-                            <a href="quiz.html" style = "color:#F58B8D;">Quiz</a>
-                        </li>
+                <!-- select the Quiz tab -->
+                <li class="active">
+                    <a href="quiz.html" style = "color:#F58B8D;">Quiz</a>
+                </li>
 
-                        <li>
-                            <!-- when make an information.html: -->
-                            <a href = "information.html">Information</a>
-                        </li>
-                     </ul>
-                  </nav>
-        </header>
-        <h2 class = "header">BIT OF YOU</h2>
-    </head>
-    <body>
-    	<center>
-        	<div id = "beginQuizPage">
-        		<div class = "header">
-      				<h2>Niche Quiz</h2>
-      			</div>
-        		
-         		<p>This quiz will help determine your niche in computer science!</p>
-            	<br><br>
-        		<button id="beginButton" onclick = "show('quizPage', 'beginQuizPage');">BEGIN</button>
-       		</div>
-       	</center>
-
-
-    	<div id = "quizPage" style="display:none">
-        	<form id="regForm">
-            	<center>
-                	<div class = "tab">
-                    	<h1 style>When you see a new tech product, what do you think about most?</h1>
-                    	<button type = "button" onclick="nextPrev(1)">How useful it is to me and others</button><br>
-                    	<button type="button" onclick="nextPrev(1)">What problem it solves</button><br>
-                    	<button type="button" onclick="nextPrev(1)">Who is buying it and why</button><br>
-                	</div>
-                	<div class = "tab">
-                    	<h1 style>When you encounter a problem, what do you do?</h1>
-                    	<button type = "button" onclick="nextPrev(1)">Check my priorities, reevaluate the situation, and pivot in a better direction</button><br>
-                    	<button type="button"  onclick="nextPrev(1)">Stay positive and try to think of new solutions</button><br>
-                    	<button type="button"  onclick="nextPrev(1)">Consider all the options objectively before making a decision</button><br>
-                	</div>
-                	<div class = "tab">
-                    	<h1 style>In tech, what are you most interested in?</h1>
-                    	<button type = "button" onclick="nextPrev(1)">Understanding everything on the tech stack to some degree</button><br>
-                    	<button type="button"  onclick="nextPrev(1)">Using data structures & algorithms to solve problems</button><br>
-                    	<button type="button"  onclick="nextPrev(1)">Mathematical aspects and analyzing data</button><br>
-                	</div>
-                	<div class = "tab">
-                    	<h1 style>In what setting do you work best?</h1>
-                    	<button type ="button" onclick=goResults()>As the leader of a team</button><br>
-                    	<button type="button"  onclick=goResults()>As a collaborative team player</button><br>
-                    	<button type="button"  onclick=goResults()>Mostly solo</button><br>
-                	</div>
-                	<div style = "text-align:center; margin-top:20px;">
-                    	<span class="step"></span>
-                    	<span class="step"></span>
-                    	<span class="step"></span>
-                    	<span class="step"></span>
-                	</div>
-            	</center>
-        	</form>
+                <li>
+                    <!-- when make an information.html: -->
+                    <a href = "information.html">Information</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <h2 class = "header">BIT OF YOU</h2>
+</head>
+<body>
+<center>
+    <div id = "beginQuizPage">
+        <div class = "header">
+            <h2>Niche Quiz</h2>
         </div>
+
+        <p>This quiz will help determine your niche in computer science!</p>
+        <br><br>
+        <button id="beginButton" onclick = "show('quizPage', 'beginQuizPage');">BEGIN</button>
+    </div>
+
+    <div id = "quizPage" style="display:none">
+        <form id="regForm" style ="padding: 15px 15px;">
+                <div class = "tab" >
+                    <h2 >When you see a new tech product, what do you think about most?</h2>
+                    <button type = "button" class = "quizChoice" onclick="nextPrev(1)">How useful it is to me and others</button><br>
+                    <button type="button" class = "quizChoice" onclick="nextPrev(1)">What problem it solves</button><br>
+                    <button type="button" class = "quizChoice" onclick="nextPrev(1)">Who is buying it and why</button><br>
+                </div>
+                <div class = "tab">
+                    <h2>When you encounter a problem, what do you do?</h2>
+                    <button type = "button" class = "quizChoice" onclick="nextPrev(1)">Check my priorities, reevaluate the situation, and pivot in a better direction</button><br>
+                    <button type="button"  class = "quizChoice" onclick="nextPrev(1)">Stay positive and try to think of new solutions</button><br>
+                    <button type="button"  class = "quizChoice" onclick="nextPrev(1)">Consider all the options objectively before making a decision</button><br>
+                </div>
+                <div class = "tab">
+                    <h2>In tech, what are you most interested in?</h2>
+                    <button type = "button" class = "quizChoice" onclick="nextPrev(1)">Understanding everything on the tech stack to some degree</button><br>
+                    <button type="button"  class = "quizChoice" onclick="nextPrev(1)">Using data structures & algorithms to solve problems</button><br>
+                    <button type="button"  class = "quizChoice" onclick="nextPrev(1)">Mathematical aspects and analyzing data</button><br>
+                </div>
+                <div class = "tab">
+                    <h2>In what setting do you work best?</h2>
+                    <button type ="button" class = "quizChoice" onclick=goResults()>As the leader of a team</button><br>
+                    <button type="button"  class = "quizChoice" onclick=goResults()>As a collaborative team player</button><br>
+                    <button type="button"  class = "quizChoice" onclick=goResults()>Mostly solo</button><br>
+                </div>
+                <div style = "text-align:center; margin-top:20px;">
+                    <span class="step"></span>
+                    <span class="step"></span>
+                    <span class="step"></span>
+                    <span class="step"></span>
+                </div>
+        </form>
+    </div>
+</center>
 
         <script>
             var currentTab = 0; // Current tab is set to be the first tab (0)
@@ -90,9 +87,9 @@
 
             //Changes pages
             function show(showPage, hidePage){
-            	document.getElementById(showPage).style.display='block';
-            	document.getElementById(hidePage).style.display='none';
-            	return false;
+                document.getElementById(showPage).style.display='block';
+                document.getElementById(hidePage).style.display='none';
+                return false;
             }
 
             // Displays specified tab
@@ -157,8 +154,8 @@
             }
 
             function goResults(){
-            	window.location.href = "results.html";
-        	}
+                window.location.href = "results.html";
+            }
         </script>
-    </body>
+</body>
 </html>

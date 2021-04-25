@@ -1,0 +1,65 @@
+<!--VERSION #1:
+    Please update the version # everytime you update the code! -->
+    
+<!--TODO: Change filename to "PMResult" -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Result</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">  
+        <link href="index-style.css" rel="stylesheet" type="text/css">
+
+         <header>
+            <!-- Make a Top Navigation menu: -->
+                <nav id = "menu">
+                    <ul>
+                        <li>
+                            <a href="index.html" >Home</a>
+                        </li>
+                        <li class="active">
+                            <a href = "quiz.html" style = "color:#F58B8D;">Quiz</a>
+                        </li>
+
+                        <li>
+                            <a href = "information.html" >Information</a>
+                        </li>
+                     </ul>
+                  </nav>
+           </header>
+        <h1 class = "header">BIT OF YOU</h1>
+    </head>
+
+    <body>
+    <center>
+            <div class = "header">
+                <h2>You might be good at...</h2>
+            </div>
+        </center>
+    
+    <br><br>
+
+    <center>
+        <div class = "content">
+            <img src="DS.png" alt="pie chart vector art" width="200" height="200">
+            <h3>Data Science</h3>
+            <p>
+            Those who work in data science like to solve problems through storytelling. <br>
+            They follow business trends, objectively analyze real-world problems and their <br>
+            solutions, and are open-minded when it comes to choosing an approach. <br>
+            Data scientists are skilled in critical thinking and communication, and often <br>
+            work with machine learning applications and mathematical algorithms. They also <br>
+            work solo, until they need to present their findings to <br>
+            company executives and key stakeholders.<br>
+            </p>
+            <br><br>      
+        </div>
+        <button onclick = startQuiz()>RETAKE QUIZ</button>
+        <br><br>
+    </center>
+    </body>
+    <script>
+        function startQuiz(){
+            window.location.href = "quiz.html";
+        }
+    </script>
+</html>

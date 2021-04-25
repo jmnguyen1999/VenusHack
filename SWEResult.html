@@ -1,0 +1,65 @@
+<!--VERSION #1:
+    Please update the version # everytime you update the code! -->
+    
+<!--TODO: Change filename to "PMResult" -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Result</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">  
+        <link href="index-style.css" rel="stylesheet" type="text/css">
+
+         <header>
+            <!-- Make a Top Navigation menu: -->
+                <nav id = "menu">
+                    <ul>
+                        <li>
+                            <a href="index.html" >Home</a>
+                        </li>
+                        <li class="active">
+                            <a href = "quiz.html" style = "color:#F58B8D;">Quiz</a>
+                        </li>
+
+                        <li>
+                            <a href = "information.html" >Information</a>
+                        </li>
+                     </ul>
+                  </nav>
+           </header>
+        <h1 class = "header">BIT OF YOU</h1>
+    </head>
+
+    <body>
+    <center>
+            <div class = "header">
+                <h2>You might be good at...</h2>
+            </div>
+        </center>
+    
+    <br><br>
+
+    <center>
+        <div class = "content">
+            <img src="PM.png" alt="pencil vector art" width="200" height="200">
+            <h3>Software Engineering</h3>
+            <p>
+            Those who work in software engineering love to find <br>
+            creative solutions and learn new things. They may not be fond of <br>
+            customer interactions, but they’re collaborative and have great interpersonal<br> 
+            skills within their team! Software engineers have deep technical knowledge <br>
+            in data structures and algorithms, and can keep calm and positive attitudes <br>
+            when encountering bugs in their code.Their work environment is <br>
+            fast-paced and collaborative, but they’re also able to manage themselves.
+            </p>
+            <br><br>      
+        </div>
+        <button onclick = startQuiz()>RETAKE QUIZ</button>
+        <br><br>
+    </center>
+    </body>
+    <script>
+        function startQuiz(){
+            window.location.href = "quiz.html";
+        }
+    </script>
+</html>
