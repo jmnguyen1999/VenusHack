@@ -1,12 +1,15 @@
 
-<!--VERSION #4:
+
+<!--VERSION #6:
     Please update the version # everytime you update the code!
-    Holds all the content of the quiz
-    Need to implement a counter and link to the result page-->
+    Will bring user to results based on answers, placeholders right now
+    Need to build different result pages-->
 
 <!--TODO: Rename downloaded file to "quiz" -->
+
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Niche Quiz </title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -31,12 +34,12 @@
             </ul>
         </nav>
     </header>
-    <h2 class = "header">BIT OF YOU</h2>
+    <h2 id = "siteTitle">BIT OF YOU</h2>
 </head>
 <body>
 <center>
     <div id = "beginQuizPage">
-        <div class = "header">
+        <div id = "header">
             <h2>Niche Quiz</h2>
         </div>
 
@@ -47,115 +50,193 @@
 
     <div id = "quizPage" style="display:none">
         <form id="regForm" style ="padding: 15px 15px;">
-                <div class = "tab" >
-                    <h2 >When you see a new tech product, what do you think about most?</h2>
-                    <button type = "button" class = "quizChoice" onclick="nextPrev(1)">How useful it is to me and others</button><br>
-                    <button type="button" class = "quizChoice" onclick="nextPrev(1)">What problem it solves</button><br>
-                    <button type="button" class = "quizChoice" onclick="nextPrev(1)">Who is buying it and why</button><br>
-                </div>
-                <div class = "tab">
-                    <h2>When you encounter a problem, what do you do?</h2>
-                    <button type = "button" class = "quizChoice" onclick="nextPrev(1)">Check my priorities, reevaluate the situation, and pivot in a better direction</button><br>
-                    <button type="button"  class = "quizChoice" onclick="nextPrev(1)">Stay positive and try to think of new solutions</button><br>
-                    <button type="button"  class = "quizChoice" onclick="nextPrev(1)">Consider all the options objectively before making a decision</button><br>
-                </div>
-                <div class = "tab">
-                    <h2>In tech, what are you most interested in?</h2>
-                    <button type = "button" class = "quizChoice" onclick="nextPrev(1)">Understanding everything on the tech stack to some degree</button><br>
-                    <button type="button"  class = "quizChoice" onclick="nextPrev(1)">Using data structures & algorithms to solve problems</button><br>
-                    <button type="button"  class = "quizChoice" onclick="nextPrev(1)">Mathematical aspects and analyzing data</button><br>
-                </div>
-                <div class = "tab">
-                    <h2>In what setting do you work best?</h2>
-                    <button type ="button" class = "quizChoice" onclick=goResults()>As the leader of a team</button><br>
-                    <button type="button"  class = "quizChoice" onclick=goResults()>As a collaborative team player</button><br>
-                    <button type="button"  class = "quizChoice" onclick=goResults()>Mostly solo</button><br>
-                </div>
-                <div style = "text-align:center; margin-top:20px;">
-                    <span class="step"></span>
-                    <span class="step"></span>
-                    <span class="step"></span>
-                    <span class="step"></span>
-                </div>
+            <script>
+                var answerPM = 0;
+                var answerSWE = 0;
+                var answerDS = 0;
+                var answerSM = 0;
+        var answerCIR = 0;
+                var totalCount = 0;
+            </script>
+            <div class = "tab" >
+                <h2 >When you see a new tech product, what do you think about most?</h2>
+                <button type="button" class = "quizChoice" onclick="answeredSWE(); nextPrev(1);">What problem it solves</button><br>
+                <button type="button" class = "quizChoice" onclick="answeredDS(); nextPrev(1);">Who would be buying it and why</button><br>
+                <button type = "button" class = "quizChoice" onclick="answeredCIR(); nextPrev(1);">What new features they present and how it was implemented</button><br>
+                <button type = "button" class = "quizChoice" onclick="answeredSM(); nextPrev(1);">The specifications of the product: memory, battery power, speed, graphics, etc. </button><br>
+            </div>
+            <div class = "tab">
+                <h2>When you encounter a problem, what do you do?</h2>
+                <button type="button"  class = "quizChoice" onclick="answeredSWE(); nextPrev(1);">Stay positive and try to think of new solutions</button><br>
+                <button type = "button" class = "quizChoice" onclick="answeredPM(); nextPrev(1);">Check my priorities, reevaluate the situation, and pivot in a better direction</button><br>
+                <button type = "button" class = "quizChoice" onclick="answeredSM(); nextPrev(1);">Consider my resources, the things that need to be done, and see if there's a prior solution I can reference.</button><br>
+                <button type="button"  class = "quizChoice" onclick="answeredDS(); nextPrev(1);">Consider all the options objectively before making a decision</button><br>
+            </div>
+            <div class = "tab">
+                <h2>What soft skill of yours do you think is your strongest asset?</h2>
+                <button type="button"  class = "quizChoice" onclick="answeredSWE(); nextPrev(1);">My determination and yearn for growth</button><br>
+                <button type = "button" class = "quizChoice" onclick="answeredPM(); nextPrev(1);">My communication and compassion for others</button><br>
+                <button type = "button" class = "quizChoice" onclick="answeredCIR(); nextPrev(1);">Being able to think "bigger", and having a year for learning</button><br>
+                <button type="button"  class = "quizChoice" onclick="answeredSM(); nextPrev(1);">Being able to analyze and create well thought out solutions</button><br>
+        </div>
+            <div class = "tab">
+                <h2>In tech, what are you most interested in?</h2>
+                <button type = "button" class = "quizChoice" onclick="answeredSM(); nextPrev(1);">How both hardware and software come together to make one cohesive piece. </button><br>
+                <button type = "button" class = "quizChoice" onclick="answeredPM(); nextPrev(1);">How existing frameworks and languages could influence future tech discoveries</button><br>
+                <button type="button"  class = "quizChoice" onclick="answeredDS(); nextPrev(1);">Mathematical aspects and analyzing data</button><br>
+                <button type="button"  class = "quizChoice" onclick="answeredSWE(); nextPrev(1);">Using data structures & algorithms to solve problems</button><br>
+            </div>
+        <div class = "tab">
+                <h2>What's your favorite part about programming?</h2>
+                <button type = "button" class = "quizChoice" onclick="answeredSM(); nextPrev(1);">How so many different file types all become organized in such a structure that makes the application work perfectly.  </button><br>
+                <button type = "button" class = "quizChoice" onclick="answeredPM(); nextPrev(1);">Understanding everything on the tech stack to some degree</button><br>
+                <button type="button"  class = "quizChoice" onclick="answeredDS(); nextPrev(1);">Using it to help me figure out how to do math problems easier and simplifying the process. </button><br>
+                <button type="button"  class = "quizChoice" onclick="answeredCIR(); nextPrev(1);">How fields and structures relate to each other in a way that makes it easier to implement things. </button><br>
+            </div>
+            <div class = "tab">
+                <h2>In what setting do you work best?</h2>
+                <button type ="button" class = "quizChoice" onclick = "answeredPM();">As the leader of a team</button><br>
+                <button type="button"  class = "quizChoice" onclick = "answeredSE();">As a collaborative team player</button><br>
+                <button type="button"  class = "quizChoice" onclick = "answeredDS();">Mostly solo</button><br>
+                <button type = "button" class = "quizChoice" onclick="answeredSM();">A balance between collabortiveness and independence. </button><br>
+            </div>
+            <div style = "text-align:center; margin-top:20px;">
+                <span class="step"></span>
+                <span class="step"></span>
+                <span class="step"></span>
+                <span class="step"></span>
+                <span class="step"></span>
+                <span class="step"></span>
+
+            </div>
         </form>
     </div>
 </center>
 
-        <script>
-            var currentTab = 0; // Current tab is set to be the first tab (0)
-            showTab(currentTab); // Display the current tab
+    <script>
+        var currentTab = 0; // Current tab is set to be the first tab (0)
+        showTab(currentTab); // Display the current tab
 
-            //Changes pages
-            function show(showPage, hidePage){
-                document.getElementById(showPage).style.display='block';
-                document.getElementById(hidePage).style.display='none';
+        //Changes pages
+        function show(showPage, hidePage){
+            document.getElementById(showPage).style.display='block';
+            document.getElementById(hidePage).style.display='none';
+            return false;
+        }
+
+        // Displays specified tab
+        function showTab(n) {
+            var x = document.getElementsByClassName("tab");
+            x[n].style.display = "block";
+            if (n == 0) {
+                document.getElementById("prevBtn").style.display = "none";
+            } else {
+                document.getElementById("prevBtn").style.display = "inline";
+            }
+            if (n == (x.length - 1)) {
+                document.getElementById("nextBtn").innerHTML = "Submit";
+            } else {
+                document.getElementById("nextBtn").innerHTML = "Next";
+            }
+            fixStepIndicator(n)
+            }
+
+        // Figures out which tab to display
+        function nextPrev(n) {
+            var x = document.getElementsByClassName("tab");
+            if (n == 1 && !validateForm()) return false;
+
+            x[currentTab].style.display = "none"; //Hide current table
+            currentTab = currentTab + n;
+
+            if (currentTab >= x.length) {
+                // If the form is submitted
+                document.getElementById("regForm").submit();
                 return false;
             }
+            showTab(currentTab);
+        }
 
-            // Displays specified tab
-            function showTab(n) {
-                var x = document.getElementsByClassName("tab");
-                x[n].style.display = "block";
-                if (n == 0) {
-                    document.getElementById("prevBtn").style.display = "none";
-                } else {
-                    document.getElementById("prevBtn").style.display = "inline";
+        function validateForm() {
+            var x, y, i, valid = true;
+            x = document.getElementsByClassName("tab");
+            y = x[currentTab].getElementsByTagName("input");
+
+            for (i = 0; i < y.length; i++) {
+                // If a field is empty...
+                if (y[i].value == "") {
+                    // add an "invalid" class to the field:
+                    y[i].className += " invalid";
+                    // and set the current valid status to false
+                    valid = false;
                 }
-                if (n == (x.length - 1)) {
-                    document.getElementById("nextBtn").innerHTML = "Submit";
-                } else {
-                    document.getElementById("nextBtn").innerHTML = "Next";
-                }
-                fixStepIndicator(n)
             }
-
-            // Figures out which tab to display
-            function nextPrev(n) {
-                var x = document.getElementsByClassName("tab");
-                if (n == 1 && !validateForm()) return false;
-
-                x[currentTab].style.display = "none"; //Hide current table
-                currentTab = currentTab + n;
-
-                if (currentTab >= x.length) {
-                    // If the form is submitted
-                    document.getElementById("regForm").submit();
-                    return false;
-                }
-                showTab(currentTab);
+            if (valid) {
+                document.getElementsByClassName("step")[currentTab].className += " finish";
             }
+            return valid;
+        }
 
-            function validateForm() {
-                var x, y, i, valid = true;
-                x = document.getElementsByClassName("tab");
-                y = x[currentTab].getElementsByTagName("input");
-
-                for (i = 0; i < y.length; i++) {
-                    // If a field is empty...
-                    if (y[i].value == "") {
-                        // add an "invalid" class to the field:
-                        y[i].className += " invalid";
-                        // and set the current valid status to false
-                        valid = false;
-                    }
-                }
-                if (valid) {
-                    document.getElementsByClassName("step")[currentTab].className += " finish";
-                }
-                return valid;
+        function fixStepIndicator(n) {
+            var i, x = document.getElementsByClassName("step");
+            for (i = 0; i < x.length; i++) {
+                x[i].className = x[i].className.replace(" active", "");
             }
-
-            function fixStepIndicator(n) {
-                var i, x = document.getElementsByClassName("step");
-                for (i = 0; i < x.length; i++) {
-                    x[i].className = x[i].className.replace(" active", "");
-                }
-                x[n].className += " active";
+            x[n].className += " active";
+        }
+        function answeredPM(){
+            answerPM++;
+            totalCount++;
+            if(totalCount == 6){
+                goResults();
             }
-
-            function goResults(){
-                window.location.href = "results.html";
+        }
+        function answeredSWE(){
+            answerSWE++;
+            totalCount++;
+            if(totalCount == 6){
+                goResults();
             }
+        }
+        function answeredDS(){
+            answerDS++;
+            totalCount++;
+            if(totalCount == 6){
+                goResults();
+            }
+        }
+        function answeredSM(){
+            answerSM++;
+            totalCount++;
+            if(totalCount == 6){
+                goResults();
+            }
+        }
+    function answeredCIR(){
+            answerCIR++;
+            totalCount++;
+            if(totalCount == 6){
+                goResults();
+            }
+        }
+        function goResults(){
+            if(answerPM > answerSWE && answerPM > answerDS && answerPM > answerSM && answerPM > answerCIR){
+                window.location.href = "PMResult.html"; //Replace with Product Mangement results
+            }
+            else if(answerSWE > answerDS && answerSWE > answerPM && answerSWE > answerSM && answerSWE > answerCIR){
+                window.location.href = "SWEResult.html"; //Replace with Software Engineering results
+            }
+            else if(answerSM > answerSWE && answerSM > answerDS && answerSM > answerPM && answerSM > answerCIR){
+                window.location.href = "SMResult.html"; //Replace with Software Engineering results
+            }
+        else if(answerCIR > answerPM && answerCIR > answerSWE && answerCIR > answerDS && answerCIR > answerSM){
+        window.location.href = "CIRResult.html";
+        }
+            else{
+                window.location.href = "DSResult.html"; //Replace with Data Science results
+            }
+        }
+
         </script>
 </body>
 </html>
