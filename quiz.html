@@ -1,0 +1,164 @@
+
+<!--VERSION #3:
+    Please update the version # everytime you update the code!
+    Holds all the content of the quiz
+    Need to implement a counter and link to the result page-->
+    
+<!--TODO: Rename downloaded file to "quiz" -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Niche Quiz </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">  
+        <link href="index-style.css" rel="stylesheet" type="text/css">
+        <header>
+            <!-- Make a Top Navigation menu: formatted by the CSS file-->
+                <nav id = "menu">
+                    <ul>
+                    	<li>
+                            <a href = "index.html">Home</a>
+                        </li>
+
+					<!-- select the Quiz tab -->
+                        <li class="active">	
+                            <a href="quiz.html" style = "color:#F58B8D;">Quiz</a>
+                        </li>
+
+                        <li>
+                            <!-- when make an information.html: -->
+                            <a href = "information.html">Information</a>
+                        </li>
+                     </ul>
+                  </nav>
+        </header>
+        <h2 class = "header">BIT OF YOU</h2>
+    </head>
+    <body>
+    	<center>
+        	<div id = "beginQuizPage">
+        		<div class = "header">
+      				<h2>Niche Quiz</h2>
+      			</div>
+        		
+         		<p>This quiz will help determine your niche in computer science!</p>
+            	<br><br>
+        		<button id="beginButton" onclick = "show('quizPage', 'beginQuizPage');">BEGIN</button>
+       		</div>
+       	</center>
+
+
+    	<div id = "quizPage" style="display:none">
+        	<form id="regForm">
+            	<center>
+                	<div class = "tab">
+                    	<h1 style>When you see a new tech product, what do you think about most?</h1>
+                    	<button type = "button" onclick="nextPrev(1)">How useful it is to me and others</button><br>
+                    	<button type="button" onclick="nextPrev(1)">What problem it solves</button><br>
+                    	<button type="button" onclick="nextPrev(1)">Who is buying it and why</button><br>
+                	</div>
+                	<div class = "tab">
+                    	<h1 style>When you encounter a problem, what do you do?</h1>
+                    	<button type = "button" onclick="nextPrev(1)">Check my priorities, reevaluate the situation, and pivot in a better direction</button><br>
+                    	<button type="button"  onclick="nextPrev(1)">Stay positive and try to think of new solutions</button><br>
+                    	<button type="button"  onclick="nextPrev(1)">Consider all the options objectively before making a decision</button><br>
+                	</div>
+                	<div class = "tab">
+                    	<h1 style>In tech, what are you most interested in?</h1>
+                    	<button type = "button" onclick="nextPrev(1)">Understanding everything on the tech stack to some degree</button><br>
+                    	<button type="button"  onclick="nextPrev(1)">Using data structures & algorithms to solve problems</button><br>
+                    	<button type="button"  onclick="nextPrev(1)">Mathematical aspects and analyzing data</button><br>
+                	</div>
+                	<div class = "tab">
+                    	<h1 style>In what setting do you work best?</h1>
+                    	<button type ="button" onclick=goResults()>As the leader of a team</button><br>
+                    	<button type="button"  onclick=goResults()>As a collaborative team player</button><br>
+                    	<button type="button"  onclick=goResults()>Mostly solo</button><br>
+                	</div>
+                	<div style = "text-align:center; margin-top:20px;">
+                    	<span class="step"></span>
+                    	<span class="step"></span>
+                    	<span class="step"></span>
+                    	<span class="step"></span>
+                	</div>
+            	</center>
+        	</form>
+        </div>
+
+        <script>
+            var currentTab = 0; // Current tab is set to be the first tab (0)
+            showTab(currentTab); // Display the current tab
+
+            //Changes pages
+            function show(showPage, hidePage){
+            	document.getElementById(showPage).style.display='block';
+            	document.getElementById(hidePage).style.display='none';
+            	return false;
+            }
+
+            // Displays specified tab
+            function showTab(n) {
+                var x = document.getElementsByClassName("tab");
+                x[n].style.display = "block";
+                if (n == 0) {
+                    document.getElementById("prevBtn").style.display = "none";
+                } else {
+                    document.getElementById("prevBtn").style.display = "inline";
+                }
+                if (n == (x.length - 1)) {
+                    document.getElementById("nextBtn").innerHTML = "Submit";
+                } else {
+                    document.getElementById("nextBtn").innerHTML = "Next";
+                }
+                fixStepIndicator(n)
+            }
+
+            // Figures out which tab to display
+            function nextPrev(n) {
+                var x = document.getElementsByClassName("tab");
+                if (n == 1 && !validateForm()) return false;
+
+                x[currentTab].style.display = "none"; //Hide current table
+                currentTab = currentTab + n;
+
+                if (currentTab >= x.length) {
+                    // If the form is submitted
+                    document.getElementById("regForm").submit();
+                    return false;
+                }
+                showTab(currentTab);
+            }
+
+            function validateForm() {
+                var x, y, i, valid = true;
+                x = document.getElementsByClassName("tab");
+                y = x[currentTab].getElementsByTagName("input");
+
+                for (i = 0; i < y.length; i++) {
+                    // If a field is empty...
+                    if (y[i].value == "") {
+                        // add an "invalid" class to the field:
+                        y[i].className += " invalid";
+                        // and set the current valid status to false
+                        valid = false;
+                    }
+                }
+                if (valid) {
+                    document.getElementsByClassName("step")[currentTab].className += " finish";
+                }
+                return valid;
+            }
+
+            function fixStepIndicator(n) {
+                var i, x = document.getElementsByClassName("step");
+                for (i = 0; i < x.length; i++) {
+                    x[i].className = x[i].className.replace(" active", "");
+                }
+                x[n].className += " active";
+            }
+
+            function goResults(){
+            	window.location.href = "results.html";
+        	}
+        </script>
+    </body>
+</html>
