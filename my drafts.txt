@@ -1,0 +1,687 @@
+
+<!--VERSION #4:
+    Please update the version # everytime you update the code!
+    Holds all the content of the quiz
+    Need to implement a counter and link to the result page-->
+
+<!--TODO: Rename downloaded file to "quiz" -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Niche Quiz </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="index-style.css" rel="stylesheet" type="text/css">
+    <header>
+        <!-- Make a Top Navigation menu: formatted by the CSS file-->
+        <nav id = "menu">
+            <ul>
+                <li>
+                    <a href = "index.html">Home</a>
+                </li>
+
+                <!-- select the Quiz tab -->
+                <li class="active">
+                    <a href="quiz.html" style = "color:#F58B8D;">Quiz</a>
+                </li>
+
+                <li>
+                    <!-- when make an information.html: -->
+                    <a href = "information.html">Information</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <h2 id= "siteTitle">BIT OF YOU</h2>
+</head>
+<body>
+<center>
+    <div id = "beginQuizPage">
+        <div id = "header">
+            <h2>Niche Quiz</h2>
+        </div>
+
+        <p>This quiz will help determine your niche in computer science! <br>Take a look at the Information tab to see some possible results!</p>
+        <br><br>
+        <button id="beginButton" onclick = "show('quizPage', 'beginQuizPage');">BEGIN</button>
+    </div>
+
+    <div id = "quizPage" style="display:none">
+        <form id="regForm" style ="padding: 15px 15px;">
+                <div class = "tab" id="Q1">
+                    <h2 >When you see a new tech product, what do you think about most?</h2><br>
+                    <button type = "button" class = "quizChoice A" onclick="negateCurrState(this.classList)">How useful it is to me and others</button><br>
+                    <button type="button" class = "quizChoice B" onclick="nextPrev(1)">What problem it solves</button><br>
+                    <button type="button" class = "quizChoice C" onclick="nextPrev(1)">Who is buying it and why</button><br>
+
+                    <p id= "testingSpot"></p>
+                </div>
+
+
+                <div class = "tab" id="Q2">
+                    <h2>When you encounter a problem, what do you do?</h2><br>
+                    <button type = "button" class = "quizChoice" onclick="nextPrev(1)">Check my priorities, reevaluate the situation, and pivot in a better direction</button><br>
+                    <button type="button"  class = "quizChoice" onclick="nextPrev(1)">Stay positive and try to think of new solutions</button><br>
+                    <button type="button"  class = "quizChoice" onclick="nextPrev(1)">Consider all the options objectively before making a decision</button><br>
+                </div>
+
+
+                <div class = "tab" id="Q3">
+                    <h2>In tech, what are you most interested in?</h2><br>
+                    <button type = "button" class = "quizChoice A" onclick="nextPrev(1)">Understanding everything on the tech stack to some degree</button><br>
+                    <button type="button"  class = "quizChoice B" onclick="nextPrev(1)">Using data structures & algorithms to solve problems</button><br>
+                    <button type="button"  class = "quizChoice C" onclick="nextPrev(1)">Mathematical aspects and analyzing data</button><br>
+                </div>
+
+
+                <div class = "tab" id="Q4">
+                    <h2>In what setting do you work best?</h2><br>
+                    <button" class = "quizChoice A" onclick=goResults()>As the leader of a team</button><br>
+                    <button type="button"  class = "quizChoice B" onclick=goResults()>As a collaborative team player</button><br>
+                    <button type="button"  class = "quizChoice C" onclick=goResults()>Mostly solo</button><br>
+                </div>
+                <div style = "text-align:center; margin-top:20px;">
+                    <span class="step"></span>
+                    <span class="step"></span>
+                    <span class="step"></span>
+                    <span class="step"></span>
+                </div>
+        </form>
+    </div>
+</center>
+
+        <script>
+        	//To count user's answers:
+        	var numOfA = 0;
+        	var numOfB = 0;
+        	var numOfC = 0;
+            showTab("Q1"); 		//Display's the Q1, hides all other Q's
+
+            //Changes pages
+            function show(showPage, hidePage){
+                document.getElementById(showPage).style.display='block';
+                document.getElementById(hidePage).style.display='none';
+                return false;
+            }
+
+
+            // Purpose:		should be called only when the "next" button is clicked. Display's the Q of the given id, and hides all other Q's
+            function showTab(id) {
+            	//Display the right Q:
+                document.getElementById(id).style.display = "block";
+
+                var allQs = document.getElementsByClassName("tab");
+                var i;
+                //Traverse all questions, only hide it if it is NOT = the given id
+                for(i = 0; i < allQs.length; i++){
+                	if(allQs[i].id != id){
+                        allQs[i].style.display = "none";
+                	}
+                }
+            }
+
+            // Figures out which tab to display
+            function nextPrev(n) {
+                var x = document.getElementsByClassName("tab");
+                if (n == 1 && !validateForm()) return false;
+
+                x[currentTab].style.display = "none"; //Hide current table
+                currentTab = currentTab + n;
+
+                if (currentTab >= x.length) {
+                    // If the form is submitted
+                    document.getElementById("regForm").submit();
+                    return false;
+                }
+                showTab(currentTab);
+            }
+
+            function validateForm() {
+                var x, y, i, valid = true;
+                x = document.getElementsByClassName("tab");
+                y = x[currentTab].getElementsByTagName("input");
+
+                for (i = 0; i < y.length; i++) {
+                    // If a field is empty...
+                    if (y[i].value == "") {
+                        // add an "invalid" class to the field:
+                        y[i].className += " invalid";
+                        // and set the current valid status to false
+                        valid = false;
+                    }
+                }
+                if (valid) {
+                    document.getElementsByClassName("step")[currentTab].className += " finish";
+                }
+                return valid;
+            }
+
+            function fixStepIndicator(n) {
+                var i, x = document.getElementsByClassName("step");
+                for (i = 0; i < x.length; i++) {
+                    x[i].className = x[i].className.replace(" active", "");		/*making all questions not active */
+                }
+                x[n].className += " active";				/*Making only question #n active */
+            }
+
+            /*Purpose:   only called when button is clicked --> If the button is active, make it inactive, if it's inactive, make it active.
+			  Parameters:   the classList and id of the button that was clicked. 
+            */
+            function negateCurrState(classList){
+            	var i;
+            	var isActive = false;		//assume this element is not active
+            	//1.) Traverse all the classes this element has. If one of them is "active", delete it and change isActive = true
+            	
+            	for(i = 0; i < classList.length; i++){
+         
+            		if(classList[i] == "active"){
+            			var allActive = document.getElementsByClassName("active");
+            			allActive[0].className = allActive[0].className.replace(" active", "");	
+            			isActive = true;
+            		}
+            	}
+            	
+
+            	//2.) If was not active, make it active!
+            	if(!isActive){
+            		classList.add("active");
+            	}
+            }
+
+
+            function goResults(){
+                window.location.href = "results.html";
+            }
+        </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--VERSION #5:
+    Please update the version # everytime you update the code!
+    Will bring user to results based on answers, placeholders right now
+    Need to build different result pages-->
+
+<!--TODO: Rename downloaded file to "quiz" -->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Niche Quiz </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="index-style.css" rel="stylesheet" type="text/css">
+    <header>
+        <!-- Make a Top Navigation menu: formatted by the CSS file-->
+        <nav id = "menu">
+            <ul>
+                <li>
+                    <a href = "index.html">Home</a>
+                </li>
+
+                <!-- select the Quiz tab -->
+                <li class="active">
+                    <a href="quiz.html" style = "color:#F58B8D;">Quiz</a>
+                </li>
+
+                <li>
+                    <!-- when make an information.html: -->
+                    <a href = "information.html">Information</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <h2 class = "header">BIT OF YOU</h2>
+</head>
+<body>
+<center>
+    <div id = "beginQuizPage">
+        <div class = "header">
+            <h2>Niche Quiz</h2>
+        </div>
+
+        <p>This quiz will help determine your niche in computer science!</p>
+        <br><br>
+        <button id="beginButton" onclick = "show('quizPage', 'beginQuizPage');">BEGIN</button>
+    </div>
+
+    <div id = "quizPage" style="display:none">
+        <form id="regForm" style ="padding: 15px 15px;">
+            <script>
+                var answerA = 0;
+                var answerB = 0;
+                var answerC = 0;
+                var totalCount = 0;
+            </script>
+            <div class = "tab" >
+                <h2 >When you see a new tech product, what do you think about most?</h2>
+                <button type = "button" class = "quizChoice" onclick="answeredA(); nextPrev(1);">How useful it is to me and others</button><br>
+                <button type="button" class = "quizChoice" onclick="answeredB(); nextPrev(1);">What problem it solves</button><br>
+                <button type="button" class = "quizChoice" onclick="answeredC(); nextPrev(1);">Who is buying it and why</button><br>
+            </div>
+            <div class = "tab">
+                <h2>When you encounter a problem, what do you do?</h2>
+                <button type = "button" class = "quizChoice" onclick="answeredA(); nextPrev(1);">Check my priorities, reevaluate the situation, and pivot in a better direction</button><br>
+                <button type="button"  class = "quizChoice" onclick="answeredB(); nextPrev(1);">Stay positive and try to think of new solutions</button><br>
+                <button type="button"  class = "quizChoice" onclick="answeredC(); nextPrev(1);">Consider all the options objectively before making a decision</button><br>
+            </div>
+            <div class = "tab">
+                <h2>In tech, what are you most interested in?</h2>
+                <button type = "button" class = "quizChoice" onclick="answeredA(); nextPrev(1);">Understanding everything on the tech stack to some degree</button><br>
+                <button type="button"  class = "quizChoice" onclick="answeredB(); nextPrev(1);">Using data structures & algorithms to solve problems</button><br>
+                <button type="button"  class = "quizChoice" onclick="answeredC(); nextPrev(1);">Mathematical aspects and analyzing data</button><br>
+            </div>
+            <div class = "tab">
+                <h2>In what setting do you work best?</h2>
+                <button type ="button" class = "quizChoice" onclick = "answeredA();">As the leader of a team</button><br>
+                <button type="button"  class = "quizChoice" onclick = "answeredB();">As a collaborative team player</button><br>
+                <button type="button"  class = "quizChoice" onclick = "answeredC();">Mostly solo</button><br>
+            </div>
+            <div style = "text-align:center; margin-top:20px;">
+                <span class="step"></span>
+                <span class="step"></span>
+                <span class="step"></span>
+                <span class="step"></span>
+            </div>
+        </form>
+    </div>
+</center>
+
+    <script>
+        var currentTab = 0; // Current tab is set to be the first tab (0)
+        showTab(currentTab); // Display the current tab
+
+        //Changes pages
+        function show(showPage, hidePage){
+            document.getElementById(showPage).style.display='block';
+            document.getElementById(hidePage).style.display='none';
+            return false;
+        }
+
+        // Displays specified tab
+        function showTab(n) {
+            var x = document.getElementsByClassName("tab");
+            x[n].style.display = "block";
+            if (n == 0) {
+                document.getElementById("prevBtn").style.display = "none";
+            } else {
+                document.getElementById("prevBtn").style.display = "inline";
+            }
+            if (n == (x.length - 1)) {
+                document.getElementById("nextBtn").innerHTML = "Submit";
+            } else {
+                document.getElementById("nextBtn").innerHTML = "Next";
+            }
+            fixStepIndicator(n)
+            }
+
+        // Figures out which tab to display
+        function nextPrev(n) {
+            var x = document.getElementsByClassName("tab");
+            if (n == 1 && !validateForm()) return false;
+
+            x[currentTab].style.display = "none"; //Hide current table
+            currentTab = currentTab + n;
+
+            if (currentTab >= x.length) {
+                // If the form is submitted
+                document.getElementById("regForm").submit();
+                return false;
+            }
+            showTab(currentTab);
+        }
+
+        function validateForm() {
+            var x, y, i, valid = true;
+            x = document.getElementsByClassName("tab");
+            y = x[currentTab].getElementsByTagName("input");
+
+            for (i = 0; i < y.length; i++) {
+                // If a field is empty...
+                if (y[i].value == "") {
+                    // add an "invalid" class to the field:
+                    y[i].className += " invalid";
+                    // and set the current valid status to false
+                    valid = false;
+                }
+            }
+            if (valid) {
+                document.getElementsByClassName("step")[currentTab].className += " finish";
+            }
+            return valid;
+        }
+
+        function fixStepIndicator(n) {
+            var i, x = document.getElementsByClassName("step");
+            for (i = 0; i < x.length; i++) {
+                x[i].className = x[i].className.replace(" active", "");
+            }
+            x[n].className += " active";
+        }
+        function answeredA(){
+            answerA++;
+            totalCount++;
+            if(totalCount == 4){
+                goResults();
+            }
+        }
+        function answeredB(){
+            answerB++;
+            totalCount++;
+            if(totalCount == 4){
+                goResults();
+            }
+        }
+        function answeredC(){
+            answerC++;
+            totalCount++;
+            if(totalCount == 4){
+                goResults();
+            }
+        }
+        function goResults(){
+            if(answerA > answerB && answerA > answerC){
+                window.location.href = "index.html"; //Replace with Product Mangement results
+            }
+            else if(answerB > answerC && answerB > answerA){
+                window.location.href = "information.html"; //Replace with Software Engineering results
+            }
+            else{
+                window.location.href = "results.html"; //Replace with Data Science results
+            }
+        }
+
+        </script>
+</body>
+</html>
+
+
+
+<!--VERSION #5:
+    Please update the version # everytime you update the code!
+    Will bring user to results based on answers, placeholders right now
+    Need to build different result pages-->
+
+<!--TODO: Rename downloaded file to "quiz" -->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Niche Quiz </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="index-style.css" rel="stylesheet" type="text/css">
+    <header>
+        <!-- Make a Top Navigation menu: formatted by the CSS file-->
+       <nav id = "menu">
+            <ul>
+                <li>
+                    <a href = "index.html">Home</a>
+                </li>
+
+                <!-- select the Quiz tab -->
+                <li class="active">
+                    <a href="quiz.html" style = "color:#F58B8D;">Quiz</a>
+                </li>
+
+                <li>
+                    <!-- when make an information.html: -->
+                    <a href = "information.html">Information</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <h2 id = "siteTitle">BIT OF YOU</h2>
+</head>
+
+<body>
+<center>
+    <div id = "beginQuizPage">
+        <div id = "header">
+            <h2>Niche Quiz</h2>
+        </div>
+
+        <p>This quiz will help determine your niche in computer science!</p>
+        <br><br>
+        <button id="beginButton" onclick = "show('quizPage', 'beginQuizPage');">BEGIN</button>
+    </div>
+
+    <div id = "quizPage" style="display:none">
+        <h1> Testing </h1>
+        <form id="regForm" style ="padding: 15px 15px;"> 
+            <script>
+                var answerPM = 0;
+                var answerSE = 0;
+                var answerDS = 0;
+                var answerSM = 0;
+                var answerCIR = 0; 
+                var totalCount = 0;
+            </script>
+
+            <div class = "tab" >
+                <h2 >When you see a new tech product, what do you think about most?</h2>
+                <button type="button" class = "quizChoice" onclick="answeredSE(); nextPrev(1);">What problem it solves</button><br>
+                <button type="button" class = "quizChoice" onclick="answeredDS(); nextPrev(1);">Who would be buying it and why</button><br>
+                <button type = "button" class = "quizChoice" onclick="answeredCIR(); nextPrev(1);">What new features they present and how it was implemented</button><br>
+                <button type = "button" class = "quizChoice" onclick="answeredSM(); nextPrev(1);">The specifications of the product: memory, battery power, speed, graphics, etc. </button><br>
+            </div>
+
+
+            <div class = "tab">
+                <h2>When you encounter a problem, what do you do?</h2>
+                <button type="button"  class = "quizChoice" onclick="answeredSE(); nextPrev(1);">Stay positive and try to think of new solutions</button><br>
+                <button type = "button" class = "quizChoice" onclick="answeredPM(); nextPrev(1);">Check my priorities, reevaluate the situation, and pivot in a better direction</button><br>
+                <button type = "button" class = "quizChoice" onclick="answeredSM(); nextPrev(1);">Consider my resources, the things that need to be done, and see if there's a prior solution I can reference.</button><br>
+                <button type="button"  class = "quizChoice" onclick="answeredDS(); nextPrev(1);">Consider all the options objectively before making a decision</button><br>
+            </div>
+
+            <div class = "tab">
+                <h2>What soft skill of yours do you think is your strongest asset?</h2>
+                <button type="button"  class = "quizChoice" onclick="answeredSE(); nextPrev(1);">My determination and yearn for growth</button><br>
+                <button type = "button" class = "quizChoice" onclick="answeredPM(); nextPrev(1);">My communication and compassion for others</button><br>
+                <button type = "button" class = "quizChoice" onclick="answeredCIR(); nextPrev(1);">Being able to think "bigger", and having a year for learning</button><br>
+                <button type="button"  class = "quizChoice" onclick="answeredSM(); nextPrev(1);">Being able to analyze and create well thought out solutions</button><br>
+            </div>
+
+            <div class = "tab">
+                <h2>In tech, what are you most interested in?</h2>
+                <button type = "button" class = "quizChoice" onclick="answeredSM(); nextPrev(1);">How both hardware and software come together to make one cohesive piece. </button><br>
+                <button type = "button" class = "quizChoice" onclick="answeredPM(); nextPrev(1);">How existing frameworks and languages could influence future tech discoveries</button><br>
+                <button type="button"  class = "quizChoice" onclick="answeredDS(); nextPrev(1);">Mathematical aspects and analyzing data</button><br>
+                 <button type="button"  class = "quizChoice" onclick="answeredSE(); nextPrev(1);">Using data structures & algorithms to solve problems</button><br>
+            </div>
+
+            <div class = "tab">
+                <h2>What's your favorite part about programming?</h2>
+                <button type = "button" class = "quizChoice" onclick="answeredSM(); nextPrev(1);">How so many different file types all become organized in such a structure that makes the application work perfectly.  </button><br>
+                <button type = "button" class = "quizChoice" onclick="answeredPM(); nextPrev(1);">Understanding everything on the tech stack to some degree</button><br>
+                <button type="button"  class = "quizChoice" onclick="answeredDS(); nextPrev(1);">Using it to help me figure out how to do math problems easier and simplifying the process. </button><br>
+                <button type="button"  class = "quizChoice" onclick="answeredCIR(); nextPrev(1);">How fields and structures relate to each other in a way that makes it easier to implement things. </button><br>
+            </div>
+
+
+            <div class = "tab">
+                <h1>Testing</h1>
+                <h2>In what setting do you work best?</h2>
+                <button type ="button" class = "quizChoice" onclick = "answeredPM();">As the leader of a team</button><br>
+                <button type="button"  class = "quizChoice" onclick = "answeredSE();">As a collaborative team player</button><br>
+                <button type="button"  class = "quizChoice" onclick = "answeredDS();">Mostly solo</button><br>
+                <button type = "button" class = "quizChoice" onclick="answeredSM(); nextPrev(1);">A balance between collabortiveness and independence. </button><br>
+            </div>
+            <div style = "text-align:center; margin-top:20px;">
+                <span class="step"></span>
+                <span class="step"></span>
+                <span class="step"></span>
+                <span class="step"></span>
+                <span class="step"></span>
+                <span class="step"></span>
+            </div>  
+        </form>
+    </div>
+</center>
+
+    <script>
+        var answerPM = 0;
+        var answerSE = 0;
+        var answerDS = 0;
+        var answerSM = 0;
+        var answerCIR = 0; 
+        var totalCount = 0;
+        var currentTab = 0; // Current tab is set to be the first tab (0)
+        showTab(currentTab); // Display the current tab
+
+        //Changes pages
+        function show(showPage, hidePage){
+            document.getElementById(showPage).style.display='block';
+            document.getElementById(hidePage).style.display='none';
+            return false;
+        }
+
+        // Displays specified tab
+        function showTab(n) {
+            var x = document.getElementsByClassName("tab");
+            x[n].style.display = "block";
+            if (n == 0) {
+                document.getElementById("prevBtn").style.display = "none";
+            } else {
+                document.getElementById("prevBtn").style.display = "inline";
+            }
+            if (n == (x.length - 1)) {
+                document.getElementById("nextBtn").innerHTML = "Submit";
+            } else {
+                document.getElementById("nextBtn").innerHTML = "Next";
+            }
+            fixStepIndicator(n)
+            }
+
+        // Figures out which tab to display
+        function nextPrev(n) {
+            var x = document.getElementsByClassName("tab");
+            if (n == 1 && !validateForm()) return false;
+
+            x[currentTab].style.display = "none"; //Hide current table
+            currentTab = currentTab + n;
+
+            if (currentTab >= x.length) {
+                // If the form is submitted
+                document.getElementById("regForm").submit();
+                return false;
+            }
+            showTab(currentTab);
+        }
+
+        function validateForm() {
+            var x, y, i, valid = true;
+            x = document.getElementsByClassName("tab");
+            y = x[currentTab].getElementsByTagName("input");
+
+            for (i = 0; i < y.length; i++) {
+                // If a field is empty...
+                if (y[i].value == "") {
+                    // add an "invalid" class to the field:
+                    y[i].className += " invalid";
+                    // and set the current valid status to false
+                    valid = false;
+                }
+            }
+            if (valid) {
+                document.getElementsByClassName("step")[currentTab].className += " finish";
+            }
+            return valid;
+        }
+
+        function fixStepIndicator(n) {
+            var i, x = document.getElementsByClassName("step");
+            for (i = 0; i < x.length; i++) {
+                x[i].className = x[i].className.replace(" active", "");
+            }
+            x[n].className += " active";
+        }
+        function answeredPM(){
+            answerPM++;
+            totalCount++;
+            if(totalCount == 6){
+                goResults();
+            }
+        }
+        function answeredSE(){
+            answerSE++;
+            totalCount++;
+            if(totalCount == 6){
+                goResults();
+            }
+        }
+        function answeredDS(){
+            answerDS++;
+            totalCount++;
+            if(totalCount == 6){
+                goResults();
+            }
+        }
+        function answeredSM(){
+            answerSM++;
+            totalCount++;
+            if(totalCount == 6){
+                goResults();
+            }
+        }
+        function answeredCIR(){
+            answerCIR++;
+            totalCount++;
+            if(totalCount == 6){
+                goResults();
+            }
+        }
+        function goResults(){
+            if(answerPM > answerSE && answerPM > answerDS && answerPM > answerSM && answerPM > answerCIR){
+                window.location.href = "PMResult.html"; // Product Mangement results
+            }
+            else if(answerSE > answerDS && answerSE > answerPM && answerSE > answerSM) && answerSE > answerCIR{
+                window.location.href = "SWEResult.html"; // Software Engineering results
+            }
+            else if(answerDS > answerSE && answerDS > answerPM && answerDS > answerSM && answerDS > answerCIR){
+                window.location.href = "DSResult.html"; //Data Science results
+            }
+            else if(answerSM > answerSE && answerSM > answerDS && answerSM > answerPM && answerSM > answerCIR){
+                window.location.href = "SMResult.html"; //Systems manager
+            }
+            else{
+                window.location.href = "CIRResult.html"; //Computer Information Researcher
+            }
+        }
+
+        </script> 
+</body>
+</html>
+
+Given more time, we would like to increase the amount of CS pathways available, and do the extensive research to allow for more accurate questions and results. We would also like to add a resources page for women-centric hackathons and organizations, postings of opportunities for CS students, and links to find more information about CS specific fields! We 'd also like to create a section to share users' results with friends or family, encouraging more people to take the Niche Quiz.
